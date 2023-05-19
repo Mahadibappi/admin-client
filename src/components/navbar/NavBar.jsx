@@ -23,7 +23,7 @@ import {
 import { useDispatch } from "react-redux";
 import profileImage from "../../assets/profile.jpg";
 
-const Navbar = () => {
+const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
   return (
@@ -37,7 +37,7 @@ const Navbar = () => {
       <Toolbar sx={{ justifyContent: "space-between" }}>
         {/* LEFT SIDE */}
         <FlexBetween>
-          <IconButton onClick={() => console.log("hello")}>
+          <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
             <MenuIcon />
           </IconButton>
           <FlexBetween
