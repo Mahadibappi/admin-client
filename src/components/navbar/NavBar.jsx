@@ -21,11 +21,16 @@ import {
   useTheme,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
-import profileImage from "../../assets/profile.jpg";
+import profileImage from "../../assets/profile-image1.jpg";
+import { useState } from "react";
 
-const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
+const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const isOpen = Boolean(anchorEl);
+  const handleClick = (event) => setAnchorEl(event.currentTarget);
+  const handleClose = () => setAnchorEl(null);
   return (
     <AppBar
       sx={{
@@ -68,7 +73,7 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
           <FlexBetween>
             <Button
-              // onClick={handleClick}
+              onClick={handleClick}
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -92,13 +97,13 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                   fontSize="0.85rem"
                   sx={{ color: theme.palette.secondary[100] }}
                 >
-                  {/* {user.name} */}
+                  {user.name}
                 </Typography>
                 <Typography
                   fontSize="0.75rem"
                   sx={{ color: theme.palette.secondary[200] }}
                 >
-                  {/* {user.occupation} */}
+                  {user.occupation}
                 </Typography>
               </Box>
               <ArrowDropDownOutlined
@@ -106,12 +111,12 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
               />
             </Button>
             <Menu
-              // anchorEl={anchorEl}
-              // open={isOpen}
-              // onClose={handleClose}
+              anchorEl={anchorEl}
+              open={isOpen}
+              onClose={handleClose}
               anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
             >
-              <MenuItem>Log Out</MenuItem>
+              <MenuItem onClick={handleClose}>Log Out</MenuItem>
             </Menu>
           </FlexBetween>
         </FlexBetween>
