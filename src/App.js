@@ -11,6 +11,9 @@ import Customers from "scenes/customers/Customers";
 import Transactions from "scenes/transaction/Transactions";
 import Geography from "scenes/geography/Geography";
 import Overview from "state/overview/Overview";
+import DailyChart from "scenes/daily/DailyChart";
+import Monthly from "scenes/monthly/Monthly";
+import BreakdownChart from "components/Breakdown";
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -29,6 +32,9 @@ function App() {
               <Route path="/transactions" element={<Transactions />} />
               <Route path="/geography" element={<Geography />} />
               <Route path="/overview" element={<Overview />} />
+              <Route path="/daily" element={<DailyChart />} />
+              <Route path="/monthly" element={<Monthly />} />
+              <Route path="/breakdown" element={<BreakdownChart />} />
             </Route>
           </Routes>
         </ThemeProvider>
