@@ -5,7 +5,15 @@ import {
   PointOfSale,
   Traffic,
 } from "@mui/icons-material";
-import { Box, Button, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
+import BreakdownChart from "components/Breakdown";
 import FlexBetween from "components/FlexBetween";
 import OverviewChart from "components/OverviewChart";
 import StatBox from "components/StatBox";
@@ -13,13 +21,44 @@ import Header from "components/header/Header";
 import React from "react";
 import { useGetDashboardQuery } from "state/api";
 
+const columns = [
+  {
+    field: "_id",
+    headerName: "ID",
+    flex: 1,
+  },
+  {
+    field: "userId",
+    headerName: "User ID",
+    flex: 1,
+  },
+  {
+    field: "createdAt",
+    headerName: "CreatedAt",
+    flex: 1,
+  },
+  {
+    field: "products",
+    headerName: "# of Products",
+    flex: 0.5,
+    sortable: false,
+    renderCell: (params) => params.value.length,
+  },
+  {
+    field: "cost",
+    headerName: "Cost",
+    flex: 1,
+    renderCell: (params) => `$${Number(params.value).toFixed(2)}`,
+  },
+];
+
 const Dashboard = () => {
   const theme = useTheme();
-  const { data, isLoadinng } = useGetDashboardQuery();
+  const { data, isLoading } = useGetDashboardQuery();
   const isNonMedium = useMediaQuery("(min-width:1200px)");
-  console.log(data);
+
   return (
-    <Box>
+    <Box m="1.5rem 2rem">
       <FlexBetween>
         <Header title="Dashboard" subtitle="This is your dashboard" />
         <Box>
@@ -99,6 +138,64 @@ const Dashboard = () => {
             />
           }
         />
+        {/* row tow */}
+
+        <Box
+          gridColumn=" span 8"
+          gridRow="span 3"
+          sx={{
+            "& .MuiDataGrid-root": {
+              border: "none",
+              borderRadius: "5rem",
+            },
+            "& .MuiDataGrid-cell": {
+              borderBottom: "none",
+            },
+            "& .MuiDataGrid-columnHeaders": {
+              backgroundColor: theme.palette.background.alt,
+              color: theme.palette.secondary[100],
+              borderBottom: "none",
+            },
+            "& .MuiDataGrid-virtualScroller": {
+              backgroundColor: theme.palette.primary.light,
+            },
+            "& .MuiDataGrid-footerContainer": {
+              backgroundColor: theme.palette.background.alt,
+              color: theme.palette.secondary[100],
+              borderTop: "none",
+            },
+            "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+              color: `${theme.palette.secondary[200]} !important`,
+            },
+          }}
+        >
+          <DataGrid
+            loading={isLoading || !data}
+            getRowId={(row) => row._id}
+            rows={(data && data.transactions) || []}
+            columns={columns}
+          />
+        </Box>
+        <Box
+          gridColumn="span 4"
+          gridRow="span 3"
+          backgroundColor={theme.palette.background.alt}
+          p="1.5rem"
+          borderRadius="0.55rem"
+        >
+          <Typography variant="h6" sx={{ color: theme.palette.secondary[100] }}>
+            Sales By Category
+          </Typography>
+          <BreakdownChart isDashboard={true} />
+          <Typography
+            p="0 0.6rem"
+            fontSize="0.8rem"
+            background={theme.palette.secondary[200]}
+          >
+            Breakdown of real states and information via category for revenue
+            made for this year and total sales.
+          </Typography>
+        </Box>
       </Box>
     </Box>
   );
