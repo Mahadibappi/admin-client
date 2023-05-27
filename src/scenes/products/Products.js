@@ -88,7 +88,7 @@ const Products = () => {
   console.log(data);
   return (
     <Box>
-      <Header title="Products" subTitle="See Your List Of Products" />
+      <Header title="Products" subtitle="See Your List Of Products" />
 
       {data || !isLoading ? (
         <Box
