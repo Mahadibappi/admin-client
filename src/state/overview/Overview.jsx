@@ -1,18 +1,10 @@
-import {
-  Box,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  useTheme,
-} from "@mui/material";
+import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import OverviewChart from "components/OverviewChart";
 import Header from "components/header/Header";
 import React from "react";
 import { useState } from "react";
 
 const Overview = () => {
-  const theme = useTheme();
   const [view, setView] = useState("units");
 
   return (

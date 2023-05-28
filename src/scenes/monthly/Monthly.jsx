@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useMemo } from "react";
 import { Box, useTheme } from "@mui/material";
 import Header from "components/header/Header";
